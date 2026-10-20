@@ -6,7 +6,7 @@ import { Moon } from "@phsa.tec/design-system-react/icons/moon";
 import { Sun } from "@phsa.tec/design-system-react/icons/sun";
 
 // O tema inicial é aplicado por um script no <head> (app/layout.tsx), antes da hidratação.
-// A fonte da verdade é a classe `dark` no <html>.
+// A fonte da verdade é a classe `dark` no <html>; o `navy` aplica o tema escuro da marca junto.
 const subscribe = (onChange: () => void) => {
   const observer = new MutationObserver(onChange);
   observer.observe(document.documentElement, { attributeFilter: ["class"] });
@@ -20,6 +20,7 @@ export function ThemeToggle() {
   const toggle = () => {
     const next = !dark;
     document.documentElement.classList.toggle("dark", next);
+    document.documentElement.classList.toggle("navy", next);
     try {
       localStorage.setItem("theme", next ? "dark" : "light");
     } catch {}
