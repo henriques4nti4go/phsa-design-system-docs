@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PHSA Design System — Docs
 
-## Getting Started
+Site de documentação do [PHSA Design System](https://github.com/henriques4nti4go/phsa-design-system) (`@phsa.tec/design-system-react`): página inicial e `/components`, com exemplos ao vivo, código para copiar, como importar e a API de cada componente.
 
-First, run the development server:
+Feito com Next.js 16 e React 19, usando o próprio design system publicado no npm.
+
+## Rodando
 
 ```bash
-npm run dev
-# or
+yarn install
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Script | O que faz |
+| --- | --- |
+| `yarn dev` | Gera o índice dos exemplos e sobe o servidor de desenvolvimento. |
+| `yarn build` | Gera o índice dos exemplos e faz o build de produção. |
+| `yarn start` | Serve o build de produção. |
+| `yarn lint` | Roda o ESLint. |
+| `yarn examples` | Só gera o índice dos exemplos (`docs/examples/index.ts`). |
+| `yarn ds` | Usa o design system local no lugar do publicado (veja abaixo). |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Rotas
 
-## Learn More
+| Rota | Conteúdo |
+| --- | --- |
+| `/` | Página inicial do design system. |
+| `/components` | Visão geral de todos os componentes, por categoria. |
+| `/components/[slug]` | Página de um componente: exemplos, código, import e API. |
+| `/playground` | Página de testes com vários componentes juntos e CSS global hostil. |
+| `/login` | Exemplo de tela de login feita só com componentes do DS. |
 
-To learn more about Next.js, take a look at the following resources:
+## Estrutura
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/                 rotas (App Router)
+  (site)/            página inicial e /components, com o header e a barra lateral
+docs/
+  catalog.ts         lista de componentes: nome, categoria, resumo e ordem na barra lateral
+  server.ts          lê a API do custom-elements.json do pacote e os arquivos de exemplo
+  examples/<slug>/   um arquivo por exemplo
+site/                componentes do site (header, barra lateral, bloco de código, sumário…)
+scripts/
+  gen-examples.mjs   gera docs/examples/index.ts
+  sync-ds.mjs        instala o design system local (yarn ds)
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+A tabela de API de cada página (atributos, propriedades, eventos, métodos, slots e parts) vem do `custom-elements.json` do pacote instalado. Quando o design system muda, a documentação acompanha sem editar nada aqui.
 
-## Deploy on Vercel
+## Adicionando um exemplo
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Crie um arquivo em `docs/examples/<slug>/`, numerado na ordem em que deve aparecer na página:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```tsx
+// docs/examples/button/06-disabled.tsx
+/**
+ * @title Desabilitado
+ * @description `disabled` impede o clique e deixa o botão apagado.
+ */
+"use client";
+
+import { Button } from "@phsa.tec/design-system-react/react";
+
+export default function ButtonDisabled() {
+  return <Button disabled>Desabilitado</Button>;
+}
+```
+
+O `@title` e o `@description` viram o título e o texto do exemplo, e o resto do arquivo é mostrado como código. O `yarn dev` e o `yarn build` regeneram o índice; com o servidor já rodando, use `yarn examples`.
+
+Para um componente novo, adicione também uma entrada em `docs/catalog.ts`. O `slug` é o nome da pasta do componente no design system e do entry point do import.
+
+## Testando mudanças do design system antes de publicar
+
+Com o repositório do design system em `../phsa-design-system`:
+
+```bash
+yarn ds        # faz o build do DS, empacota e instala em node_modules
+yarn dev       # reinicie o servidor depois
+```
+
+O `yarn ds` instala o pacote como o `npm publish` faria, e um `yarn install` depois volta para a versão do npm. Não use `link:` nem `file:` apontando para a pasta do DS: o app passa a carregar dois Reacts e quebra com "Invalid hook call".
