@@ -1,0 +1,26 @@
+/* O layout das páginas é feito com componentes do DS (phsa-stack, phsa-grid, phsa-text...) e a
+   estrutura do site fica em site/site.module.css. Aqui ficam o reset do body, a fonte e o CSS hostil. */
+body {
+  margin: 0;
+  background: var(--phsa-background);
+  color: var(--phsa-foreground);
+}
+
+/* Fonte do site pelo token do DS (vale dentro e fora do Shadow DOM). */
+:root {
+  --phsa-font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--phsa-font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* CSS hostil de propósito: não pode afetar os componentes (Shadow DOM). */
+button {
+  background: hotpink;
+  font-family: "Comic Sans MS", cursive;
+}
+
+svg {
+  width: 64px;
+  stroke: lime;
+  fill: red;
+}
