@@ -539,10 +539,10 @@
   resolved "https://registry.yarnpkg.com/@nolyfill/is-core-module/-/is-core-module-1.0.39.tgz#3dc35ba0f1e66b403c00b39344f870298ebb1c8e"
   integrity sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==
 
-"@phsa.tec/design-system-react@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@phsa.tec/design-system-react/-/design-system-react-1.3.0.tgz#bd2104617d72d312249ee8d751d49a79ddf30c34"
-  integrity sha512-IQlDneJJPVRGOsOG4zbNzxyD5l7D3WO6hikP8nWkpPIcAQEjZH4Ue1yAli27eobykG2XuDNtQTu9DG2gK4M8JA==
+"@phsa.tec/design-system-react@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@phsa.tec/design-system-react/-/design-system-react-1.4.0.tgz#f65c68c8995d2a5fe2ed369e0ac3803490efb34f"
+  integrity sha512-PADy5VFiRn8OB2la6Z1Woj56fdWKuTELfF5TGtY4FcJN4YWzGx8BbE5SSnSlTt1oLWc/pFnHPJu9rhNnJGzFNA==
   dependencies:
     "@lit/react" "^1.0.8"
     lit "^3.3.3"
