@@ -319,7 +319,22 @@
 
 /* ---------- Código ---------- */
 
+/* Cores de sintaxe do GitHub: claro no tema claro, escuro no escuro. */
 .codeBlock {
+  --sh-keyword: #cf222e;
+  --sh-string: #0a3069;
+  --sh-entity: #8250df;
+  --sh-property: #0550ae;
+  --sh-class: #953800;
+  --sh-identifier: #1f2328;
+  --sh-jsxliterals: #1f2328;
+  --sh-sign: #57606a;
+  --sh-comment: #6e7781;
+  --code-gutter: #8c959f;
+  color: var(--sh-identifier);
+}
+
+:global(.dark) .codeBlock {
   --sh-keyword: #ff7b72;
   --sh-string: #a5d6ff;
   --sh-entity: #d2a8ff;
@@ -329,7 +344,7 @@
   --sh-jsxliterals: #e6edf3;
   --sh-sign: #8b949e;
   --sh-comment: #8b949e;
-  color: #e6edf3;
+  --code-gutter: #6e7681;
 }
 
 .code {
@@ -352,12 +367,12 @@
   width: 2ch;
   margin-right: 1.5ch;
   text-align: right;
-  color: #6e7681;
+  color: var(--code-gutter);
   user-select: none;
 }
 
 .prompt {
-  color: #6e7681;
+  color: var(--code-gutter);
   user-select: none;
 }
 

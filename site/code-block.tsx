@@ -35,9 +35,9 @@ export function CodeBlock({ code, label, language = "tsx", attached = false }: P
   };
 
   return (
-    // `dark navy` escopa os tokens do DS: o bloco é navy nos dois temas, botão de copiar incluído.
-    <div className={`dark navy ${styles.codeBlock}`}>
-      <Stack background="background" radius={attached ? "none" : "lg"} bordered={!attached} gap="none">
+    // Segue o tema da página; as cores de sintaxe trocam com o `.dark` (site.module.css).
+    <div className={styles.codeBlock}>
+      <Stack background="muted" radius={attached ? "none" : "lg"} bordered={!attached} gap="none">
         <Stack direction="row" align="center" justify="between" gap="sm" padding="xs">
           <Stack padding="xs">
             <Text variant="small" tone="muted" as="span">

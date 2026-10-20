@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 export const metadata: Metadata = {
-  title: { default: "PHSA Design System", template: "%s — PHSA Design System" },
+  title: { default: "Design System", template: "%s — Design System" },
   description: "Componentes isolados em Web Components, prontos para React, Next.js e qualquer framework.",
   icons: { icon: "/logo.png" },
 };

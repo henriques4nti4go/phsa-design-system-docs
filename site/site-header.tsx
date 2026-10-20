@@ -69,7 +69,7 @@ export function SiteHeader({ groups }: { groups: NavGroup[] }) {
 
         <NavLink href="/" className={styles.brand}>
           <Logo />
-          PHSA Design System
+          Design System
         </NavLink>
 
         <div className={styles.desktopOnly}>
