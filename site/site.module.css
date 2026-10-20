@@ -525,3 +525,92 @@
   background: var(--phsa-background);
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.06);
 }
+
+/* ---------- Ícones ---------- */
+
+.navCount {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.navCount > span {
+  color: var(--phsa-muted-foreground);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Busca à esquerda; no celular, a categoria vira um select ao lado. */
+.iconToolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5rem;
+}
+
+@media (max-width: 767px) {
+  .iconToolbar {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 11rem);
+  }
+}
+
+.iconGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(6.5rem, 1fr));
+  gap: 0.5rem;
+}
+
+/* Botão nativo: a grade tem quase 1.900 deles, e cada phsa-button teria o próprio Shadow DOM.
+   As regras abaixo também desfazem o CSS hostil do globals.css (button e svg). */
+.iconTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  aspect-ratio: 1;
+  min-width: 0;
+  padding: 0.5rem;
+  border: 1px solid var(--phsa-border);
+  border-radius: var(--phsa-radius);
+  background: var(--phsa-background);
+  color: var(--phsa-foreground);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 120ms, border-color 120ms;
+}
+
+.iconTile:hover {
+  background: var(--phsa-accent);
+}
+
+.iconTile:focus-visible {
+  outline: 2px solid var(--phsa-ring);
+  outline-offset: 2px;
+}
+
+.iconTile[aria-pressed="true"] {
+  border-color: var(--phsa-primary);
+}
+
+.glyph {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.iconName {
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--phsa-muted-foreground);
+  font-size: 0.6875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sentinel {
+  height: 1px;
+}

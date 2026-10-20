@@ -5,8 +5,9 @@
   "scripts": {
     "ds": "node scripts/sync-ds.mjs",
     "examples": "node scripts/gen-examples.mjs",
-    "dev": "node scripts/gen-examples.mjs && next dev",
-    "build": "node scripts/gen-examples.mjs && next build",
+    "icons": "node scripts/gen-icons.mjs",
+    "dev": "node scripts/gen-examples.mjs && node scripts/gen-icons.mjs && next dev",
+    "build": "node scripts/gen-examples.mjs && node scripts/gen-icons.mjs && next build",
     "start": "next start",
     "lint": "eslint"
   },

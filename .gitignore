@@ -42,3 +42,6 @@ next-env.d.ts
 
 # design system local, gerado por scripts/sync-ds.mjs
 /.ds
+
+# gerado por scripts/gen-icons.mjs
+/public/icons.json
