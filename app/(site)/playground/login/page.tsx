@@ -15,7 +15,6 @@ import {
   Separator,
   Stack,
   Text,
-  Toaster,
 } from "@phsa.tec/design-system-react/react";
 import { toast } from "@phsa.tec/design-system-react/toast";
 import { Lock } from "@phsa.tec/design-system-react/icons/lock";
@@ -76,7 +75,7 @@ export default function LoginPage() {
   };
 
   return (
-    <Grid as="main" columns={2} stackBelow="md" minHeight="screen" gap="none">
+    <Grid columns={2} stackBelow="md" gap="none">
       <Stack as="aside" background="primary" padding="2xl" justify="between" hideBelow="md">
         <Stack direction="row" align="center" gap="sm">
           <Avatar name="PHSA" size="sm" shape="square" />
@@ -93,7 +92,7 @@ export default function LoginPage() {
         <Text variant="small">© 2026 PHSA</Text>
       </Stack>
 
-      <Stack as="section" background="muted" padding="xl" align="center" justify="center">
+      <Stack as="section" background="muted" padding="2xl" align="center" justify="center">
         <Stack maxWidth="sm" gap="md">
           <Card heading="Entrar" description="Acesse sua conta para continuar.">
             <Stack gap="lg">
@@ -196,7 +195,6 @@ export default function LoginPage() {
         </Stack>
       </Stack>
 
-      <Toaster />
     </Grid>
   );
 }

@@ -29,14 +29,15 @@ Abra [http://localhost:3000](http://localhost:3000).
 | `/` | Página inicial do design system. |
 | `/components` | Visão geral de todos os componentes, por categoria. |
 | `/components/[slug]` | Página de um componente: exemplos, código, import e API. |
-| `/playground` | Página de testes com vários componentes juntos e CSS global hostil. |
-| `/login` | Exemplo de tela de login feita só com componentes do DS. |
+| `/playground/<exemplo>` | Telas completas feitas só com componentes do DS: `dashboard`, `tarefas`, `configuracoes`, `checkout`, `formularios` e `login` (`/playground` abre a primeira). |
+
+Os exemplos do playground ficam em `app/(site)/playground/<exemplo>/page.tsx`, e as abas vêm de `site/playground.ts`. O CSS global do app tem regras hostis de propósito (`button` rosa, `svg` verde): elas não podem afetar os componentes.
 
 ## Estrutura
 
 ```
 app/                 rotas (App Router)
-  (site)/            página inicial e /components, com o header e a barra lateral
+  (site)/            página inicial, /components e /playground, com o header do site
 docs/
   catalog.ts         lista de componentes: nome, categoria, resumo e ordem na barra lateral
   server.ts          lê a API do custom-elements.json do pacote e os arquivos de exemplo

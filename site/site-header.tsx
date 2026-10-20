@@ -74,7 +74,7 @@ export function SiteHeader({ groups }: { groups: NavGroup[] }) {
 
         <div className={styles.desktopOnly}>
           {topLink("/components", "Componentes", inDocs)}
-          {topLink("/playground", "Playground", pathname === "/playground")}
+          {topLink("/playground", "Playground", pathname.startsWith("/playground"))}
         </div>
 
         <div className={styles.spacer} />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useState, useSyncExternalStore, type FormEvent } from "react";
 import {
   Alert,
   AlertDialog,
@@ -39,7 +39,6 @@ import {
   Tabs,
   Text,
   Textarea,
-  Toaster,
   Tooltip,
 } from "@phsa.tec/design-system-react/react";
 import { toast } from "@phsa.tec/design-system-react/toast";
@@ -60,13 +59,17 @@ const INITIAL_TEAM: Member[] = [
   { id: 4, name: "Diego Alves", role: "Leitor", status: "suspenso" },
 ];
 
+const noop = () => () => {};
 const valueOf = (e: Event) => (e.target as HTMLInputElement).value;
 const detailOf = (e: Event) => (e as CustomEvent<{ value: string }>).detail.value;
 
-export default function Home() {
-  const [dark, setDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+export default function FormsExample() {
+  // A phsa-table e a phsa-command montam só no cliente.
+  const mounted = useSyncExternalStore(
+    noop,
+    () => true,
+    () => false,
+  );
   const [tab, setTab] = useState("cadastro");
 
   // Cadastro: campos controlados só onde a página precisa reagir; o resto vem do FormData.
@@ -80,11 +83,6 @@ export default function Home() {
   const [editing, setEditing] = useState<Member | null>(null);
   const [editName, setEditName] = useState("");
   const [removing, setRemoving] = useState<Member | null>(null);
-
-  const toggleTheme = (on: boolean) => {
-    setDark(on);
-    document.documentElement.classList.toggle("dark", on);
-  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -146,19 +144,8 @@ export default function Home() {
   };
 
   return (
-    <Stack as="main" background="muted" minHeight="screen" padding="lg">
-      <Stack maxWidth="6xl" gap="lg">
-        <Stack as="header" direction="row" align="center" justify="between" gap="md" wrap>
-          <Stack direction="row" align="center" gap="sm" wrap>
-            <Text variant="h2" as="h1">
-              PHSA Design System
-            </Text>
-            <Badge variant="outline">1.1.0</Badge>
-            <Badge variant="secondary">sem CSS</Badge>
-          </Stack>
-          <Switch label="Tema escuro" checked={dark} onChange={(e) => toggleTheme((e.target as HTMLInputElement).checked)} />
-        </Stack>
-
+    <Stack background="muted" padding="lg">
+      <Stack gap="lg">
         <Alert
           variant="info"
           heading="CSS hostil ativo"
@@ -417,8 +404,6 @@ export default function Home() {
           </TabPanel>
         </Tabs>
       </Stack>
-
-      <Toaster position="bottom-right" />
     </Stack>
   );
 }
