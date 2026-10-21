@@ -1,5 +1,29 @@
 /* O layout das páginas é feito com componentes do DS (phsa-stack, phsa-grid, phsa-text...) e a
    estrutura do site fica em site/site.module.css. Aqui ficam o reset do body, a fonte e o CSS hostil. */
+/* Os tokens e os Web Components do DS só existem depois que o JS carrega: no HTML do servidor a
+   página viria sem estilo e, no tema escuro, com fundo branco. O fundo do tema já sai no HTML
+   (mesmas cores do --phsa-background do DS) e o body fica oculto até os componentes serem
+   definidos, com um teto de 2s caso algum nunca seja. */
+html {
+  background: #ffffff;
+}
+
+html.navy {
+  background: #070f2b;
+  color-scheme: dark;
+}
+
+/* next-route-announcer e nextjs-portal (overlay do dev) são tags do Next que nunca são definidas. */
+body:has(:not(:defined, next-route-announcer, nextjs-portal)) {
+  animation: phsa-wait-define 2s step-end;
+}
+
+@keyframes phsa-wait-define {
+  from {
+    visibility: hidden;
+  }
+}
+
 body {
   margin: 0;
   background: var(--phsa-background);
