@@ -33,6 +33,7 @@ import type { IconType } from "./category-icons";
 import { CodeBlock } from "./code-block";
 import { NavLink } from "./nav-link";
 import styles from "./site.module.css";
+import { Typewriter } from "./typewriter";
 
 const FEATURES: { icon: IconType; title: string; text: string }[] = [
   {
@@ -94,7 +95,7 @@ export function Landing({ version, componentCount }: { version: string; componen
             </NavLink>
             <Stack maxWidth="4xl" gap="lg" align="center">
               <Text variant="display" align="center" className={styles.heroTitle}>
-                Componentes que funcionam em qualquer lugar.
+                <Typewriter text="Componentes que funcionam em qualquer lugar." />
               </Text>
               <Text variant="lead" tone="muted" align="center">
                 Web Components acessíveis e com tema, construídos com Lit e Tailwind CSS v4. Isolados de verdade: o CSS

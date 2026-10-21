@@ -428,6 +428,33 @@
   text-wrap: balance;
 }
 
+/* Efeito de digitação do título (site/typewriter.tsx). O cursor é a borda do trecho digitado, com
+   margem negativa para não ocupar espaço: um elemento próprio abriria quebra de linha no meio da palavra. */
+.typed {
+  border-right: 0.06em solid var(--phsa-primary);
+  margin-right: -0.06em;
+  animation: caret-blink 1s step-end infinite;
+}
+
+.untyped {
+  color: transparent;
+}
+
+@keyframes caret-blink {
+  50% {
+    border-right-color: transparent;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .sectionTitle::part(text) {
   font-size: clamp(1.75rem, 3.5vw, 2.5rem);
   line-height: 1.15;
