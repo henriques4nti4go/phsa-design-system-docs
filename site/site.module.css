@@ -416,8 +416,8 @@
 
 @media (min-width: 768px) {
   .section {
-    padding-top: 6rem;
-    padding-bottom: 6rem;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
   }
 }
 
@@ -453,6 +453,28 @@
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* No celular, o lead de 20px centralizado vira um bloco de cinco linhas. */
+.heroLead::part(text),
+.sectionLead::part(text) {
+  font-size: 1.125rem;
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+  .heroLead::part(text),
+  .sectionLead::part(text) {
+    font-size: 1.25rem;
+  }
+}
+
+/* Rótulo acima do título das seções. */
+.eyebrow {
+  color: var(--phsa-primary);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+  font-weight: 500;
 }
 
 .sectionTitle::part(text) {
@@ -494,9 +516,102 @@
   justify-content: center;
   width: 2.5rem;
   height: 2.5rem;
-  border: 1px solid var(--phsa-border);
   border-radius: var(--phsa-radius);
-  background: var(--phsa-background);
+  background: var(--phsa-secondary);
+  color: var(--phsa-secondary-foreground);
+}
+
+/* O body do DS tem 14px; na landing, o texto corrido pede 16px. */
+.featureText::part(text) {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Título e texto à esquerda, conteúdo à direita (a partir de lg). */
+.split {
+  display: grid;
+  gap: 3rem;
+}
+
+@media (min-width: 1024px) {
+  .split {
+    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    gap: 5rem;
+    align-items: start;
+  }
+}
+
+/* Botão nativo contra o phsa-button, lado a lado. */
+.versus {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  height: 100%;
+  min-height: 14rem;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  background-color: var(--phsa-background);
+  background-image: radial-gradient(color-mix(in oklab, var(--phsa-foreground) 12%, transparent) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+.versus > * {
+  padding: 1rem 0;
+}
+
+.versus > * + * {
+  border-left: 1px dashed var(--phsa-border);
+}
+
+.caption {
+  color: var(--phsa-muted-foreground);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+}
+
+/* Só o tamanho: cor e fonte ficam por conta do CSS hostil, que é o ponto da demonstração. */
+.nativeButton {
+  height: 2.5rem;
+  padding: 0 1rem;
+  border: 0;
+  font-size: 0.875rem;
+}
+
+/* Faixa da chamada final, com os tokens do tema navy. A grade e o brilho a separam do fundo
+   também no tema escuro, que já é navy. */
+.band {
+  position: relative;
+  overflow: hidden;
+  padding: 4rem 1.5rem;
+  border: 1px solid var(--phsa-border);
+  border-radius: calc(var(--phsa-radius) + 8px);
+  background:
+    radial-gradient(ellipse 70% 90% at 50% 0%, color-mix(in oklab, var(--phsa-primary) 22%, transparent), transparent 70%),
+    var(--phsa-background);
+  color: var(--phsa-foreground);
+  color-scheme: dark;
+}
+
+.band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--phsa-border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--phsa-border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, black, transparent);
+  pointer-events: none;
+}
+
+.band > * {
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .band {
+    padding: 5rem 2rem;
+  }
 }
 
 /* Moldura de "janela" da vitrine. */

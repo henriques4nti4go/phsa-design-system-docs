@@ -79,6 +79,18 @@ export function Newsletter() {
   );
 }`;
 
+// Mesmas regras do app/globals.css.
+const HOSTILE_CSS = `button {
+  background: hotpink;
+  font-family: "Comic Sans MS", cursive;
+}
+
+svg {
+  width: 64px;
+  stroke: lime;
+  fill: red;
+}`;
+
 export function Landing({ version, componentCount }: { version: string; componentCount: number }) {
   const router = useRouter();
 
@@ -97,10 +109,12 @@ export function Landing({ version, componentCount }: { version: string; componen
               <Text variant="display" align="center" className={styles.heroTitle}>
                 <Typewriter text="Componentes que funcionam em qualquer lugar." />
               </Text>
-              <Text variant="lead" tone="muted" align="center">
-                Web Components acessíveis e com tema, construídos com Lit e Tailwind CSS v4. Isolados de verdade: o CSS
-                do seu app não quebra nada, e você não configura nada.
-              </Text>
+              <Stack maxWidth="2xl">
+                <Text variant="lead" tone="muted" align="center" className={styles.heroLead}>
+                  Web Components acessíveis e com tema, prontos para React e Next.js. O CSS do seu app não quebra nada,
+                  e você não configura nada.
+                </Text>
+              </Stack>
             </Stack>
             <Stack direction="row" gap="sm" justify="center" wrap>
               <Button type="button" size="lg" onClick={() => router.push("/components")}>
@@ -130,25 +144,64 @@ export function Landing({ version, componentCount }: { version: string; componen
           <Stack padding="lg">
             <Grid columns={3} stackBelow="md" gap="lg" align="start">
               <SignupCard />
-              <TeamCard />
-              <NotificationsCard />
+              {/* No celular, três cards empilhados empurram o resto da página para longe: fica só o primeiro. */}
+              <Stack hideBelow="md">
+                <TeamCard />
+              </Stack>
+              <Stack hideBelow="md">
+                <NotificationsCard />
+              </Stack>
             </Grid>
           </Stack>
         </div>
       </section>
 
-      {/* Diferenciais */}
+      {/* Prova do isolamento: o CSS hostil do globals.css é de verdade e atinge o botão nativo. */}
       <section className={`${styles.container} ${styles.section}`}>
         <Stack gap="xl">
-          <Stack gap="sm" align="center">
-            <Text variant="h2" align="center" className={styles.sectionTitle}>
-              Feito para não dar trabalho
-            </Text>
-            <Text variant="lead" tone="muted" align="center">
-              Bibliotecas em cima de frameworks de CSS costumam vazar para os dois lados. Esta faz o contrário.
-            </Text>
-          </Stack>
-          <Grid columns={3} stackBelow="md" gap="xl">
+          <SectionIntro
+            eyebrow="Shadow DOM"
+            title="Este site tem CSS hostil. Os componentes nem perceberam."
+            lead="O CSS global desta página pinta todo botão de rosa e troca a fonte. Veja o que acontece com cada um."
+          />
+          <Grid columns={2} stackBelow="lg" gap="lg" align="stretch">
+            <CodeBlock code={HOSTILE_CSS} label="app/globals.css" />
+            <div className={styles.example}>
+              <div className={styles.versus}>
+                <div>
+                  <Stack gap="sm" align="center">
+                    <span className={styles.caption}>&lt;button&gt; nativo</span>
+                    <button type="button" className={styles.nativeButton}>
+                      Salvar
+                    </button>
+                    <Badge variant="destructive">Quebrou</Badge>
+                  </Stack>
+                </div>
+                <div>
+                  <Stack gap="sm" align="center">
+                    <span className={styles.caption}>&lt;Button&gt; do PHSA</span>
+                    <Button type="button" onClick={() => toast.success("Nenhum pixel rosa")}>
+                      Salvar
+                    </Button>
+                    <Badge variant="success">Intacto</Badge>
+                  </Stack>
+                </div>
+              </div>
+            </div>
+          </Grid>
+        </Stack>
+      </section>
+
+      {/* Diferenciais */}
+      <section className={`${styles.container} ${styles.section}`}>
+        <div className={styles.split}>
+          <SectionIntro
+            align="start"
+            eyebrow="Por que usar"
+            title="Feito para não dar trabalho"
+            lead="Bibliotecas em cima de frameworks de CSS costumam vazar para os dois lados. Esta faz o contrário."
+          />
+          <Grid columns={2} stackBelow="sm" gap="xl">
             {FEATURES.map((feature) => (
               <Stack key={feature.title} gap="sm">
                 <span className={styles.featureIcon}>
@@ -157,24 +210,23 @@ export function Landing({ version, componentCount }: { version: string; componen
                 <Text variant="h4" as="h3">
                   {feature.title}
                 </Text>
-                <Text tone="muted">{feature.text}</Text>
+                <Text tone="muted" className={styles.featureText}>
+                  {feature.text}
+                </Text>
               </Stack>
             ))}
           </Grid>
-        </Stack>
+        </div>
       </section>
 
       {/* Código e resultado lado a lado */}
       <section className={`${styles.container} ${styles.section}`}>
         <Stack gap="xl">
-          <Stack gap="sm" align="center">
-            <Text variant="h2" align="center" className={styles.sectionTitle}>
-              Escreva assim. Veja assim.
-            </Text>
-            <Text variant="lead" tone="muted" align="center">
-              Componentes React tipados, com props e eventos como você espera.
-            </Text>
-          </Stack>
+          <SectionIntro
+            eyebrow="React"
+            title="Escreva assim. Veja assim."
+            lead="Componentes React tipados, com props e eventos como você espera."
+          />
           <Grid columns={2} stackBelow="lg" gap="lg" align="stretch">
             <CodeBlock code={SNIPPET} label="newsletter.tsx" />
             <div className={styles.example}>
@@ -186,20 +238,34 @@ export function Landing({ version, componentCount }: { version: string; componen
         </Stack>
       </section>
 
-      {/* Chamada final */}
+      {/* Chamada final: a classe `navy` troca os tokens só aqui dentro. */}
       <section className={`${styles.container} ${styles.section}`}>
-        <Stack gap="md" align="center">
-          <Text variant="h2" align="center" className={styles.sectionTitle}>
-            Explore os {componentCount} componentes
-          </Text>
-          <Text variant="lead" tone="muted" align="center">
-            Exemplos ao vivo, código para copiar e a API completa de cada um.
-          </Text>
-          <Button type="button" size="lg" onClick={() => router.push("/components")}>
-            Abrir a documentação
-            <Icon icon={ArrowRight} size="sm" />
-          </Button>
-        </Stack>
+        <div className={`navy ${styles.band}`}>
+          <Stack gap="lg" align="center">
+            <Stack gap="sm" align="center">
+              <span className={styles.eyebrow}>
+                {componentCount} componentes · v{version}
+              </span>
+              <Text variant="h2" align="center" className={styles.sectionTitle}>
+                Comece pelo componente que você precisa hoje
+              </Text>
+              <Stack maxWidth="xl">
+                <Text variant="lead" tone="muted" align="center" className={styles.sectionLead}>
+                  Exemplos ao vivo, código para copiar e a API completa de cada um.
+                </Text>
+              </Stack>
+            </Stack>
+            <Stack direction="row" gap="sm" justify="center" wrap>
+              <Button type="button" size="lg" onClick={() => router.push("/components")}>
+                Abrir a documentação
+                <Icon icon={ArrowRight} size="sm" />
+              </Button>
+              <Button type="button" size="lg" variant="outline" onClick={() => router.push("/playground")}>
+                Ver telas prontas
+              </Button>
+            </Stack>
+          </Stack>
+        </div>
       </section>
 
       <Separator />
@@ -239,7 +305,14 @@ function Newsletter() {
         value={email}
         onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
       />
-      <Button block onClick={() => toast.success("Inscrição feita", { description: email || "Demonstração" })}>
+      <Button
+        block
+        onClick={() =>
+          toast.success("Inscrição feita", {
+            description: email || "Demonstração",
+          })
+        }
+      >
         Assinar
       </Button>
     </Stack>
@@ -252,7 +325,9 @@ function SignupCard() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          toast.success("Conta criada", { description: "Demonstração: nada foi enviado." });
+          toast.success("Conta criada", {
+            description: "Demonstração: nada foi enviado.",
+          });
         }}
       >
         <Stack gap="md">
@@ -314,10 +389,37 @@ function NotificationsCard() {
         <Separator />
         <Alert
           variant="info"
-          heading="CSS hostil nesta página"
-          description="O app define button { background: hotpink } no CSS global. Nenhum botão ficou rosa."
+          heading="Resumo semanal"
+          description="Toda segunda às 9h, com o que mudou nos seus projetos."
         />
       </Stack>
     </Card>
+  );
+}
+
+/** Rótulo em mono, título e texto de apoio: o mesmo cabeçalho em todas as seções da landing. */
+function SectionIntro({
+  eyebrow,
+  title,
+  lead,
+  align = "center",
+}: {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  align?: "center" | "start";
+}) {
+  return (
+    <Stack gap="sm" align={align}>
+      <span className={styles.eyebrow}>{eyebrow}</span>
+      <Text variant="h2" align={align} className={styles.sectionTitle}>
+        {title}
+      </Text>
+      <Stack maxWidth={align === "center" ? "2xl" : "none"}>
+        <Text variant="lead" tone="muted" align={align} className={styles.sectionLead}>
+          {lead}
+        </Text>
+      </Stack>
+    </Stack>
   );
 }
